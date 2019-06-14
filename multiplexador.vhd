@@ -14,7 +14,7 @@ end multiplexador;
 architecture archMultiplexador of multiplexador is
 signal ylinha : std_logic_vector(7 downto 0);
 begin
-	ylinha <= (X0 and not(S(2)) and not(S(1)) and not(S(2))) or
+	ylinha <= (X0 and not(S(2)) and not(S(1)) and not(S(2))) or ---- bug esta qui 
 				 (X1 and not(S(2)) and not(S(1)) and (s(2))) or
 				 (X2 and not(S(2)) and (S(1)) and not(S(0))) or
 				 (X3 and not(S(1)) and (S(1)) and (S(0))) or

@@ -22,5 +22,5 @@ begin
                  "0010000000" WHEN "1000",
                  "0100000000" WHEN "1001",
                  "1000000000" WHEN "1011",
-					  "0000000000" WHEN OTHERS;
+		 "1111111111" WHEN OTHERS;
 end archDec;

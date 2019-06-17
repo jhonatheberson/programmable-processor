@@ -17,7 +17,7 @@ end ual;
 --architecture of entity
 architecture archUAL of ual is
   --temporary signal declarations(for intermediate c4's).
-  signal resultadoSoma, resultadoInvert, resultaAandB, resultaAorB  :std_logic_vector(7 downto 0);
+  signal resultadoSoma, resultadoInvert, resultaAandB, resultaAorB, S1, S2  :std_logic_vector(7 downto 0);
  signal coutSoma: std_logic;
 
 --component declaration with port definitions
@@ -67,13 +67,14 @@ port (
 end component;
 
 begin
-		som: somador_8bits port map(X, Y,'0', resultadoSoma, coutSoma);
+		
 		inverte: inverter port map(X, resultadoInvert);
 		AandB: A_and_B port map(X, Y, resultaAandB);
 		AorB: A_or_B port map(X, Y, resultaAorB);
-		mux: multiplexador port map(resultadoSoma, resultaAandB,resultaAorB,resultadoInvert,Y,setUAL,'1', S);
-
-
+		mux1: multiplexador port map(X, resultaAandB,resultaAorB,resultadoInvert,Y,setUAL,'1',S1);
+		mux2: multiplexador port map(Y, "00000000" ,"00000000" ,"00000000" ,"00000000" ,setUAL, '1',S2);
+		som: somador_8bits port map(S1, S2,'0', resultadoSoma, coutSoma);
+		S <= resultadoSoma;
 
 end archUAL;
 

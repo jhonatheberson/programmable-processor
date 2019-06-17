@@ -43,8 +43,9 @@ set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:35:42  JUNE 07, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION 13.0
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
-set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
-set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+set_global_assignment -name VHDL_FILE multiplexador8bit.vhd
 set_global_assignment -name VHDL_FILE inverter.vhd
 set_global_assignment -name VHDL_FILE somador_4bits.vhd
 set_global_assignment -name VHDL_FILE multiplexador.vhd
@@ -52,6 +53,11 @@ set_global_assignment -name VHDL_FILE ual.vhd
 set_global_assignment -name VHDL_FILE A_and_B.vhd
 set_global_assignment -name VHDL_FILE A_or_B.vhd
 set_global_assignment -name VHDL_FILE somador_8bits.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE ualWaveform.vwf
+set_global_assignment -name SIMULATION_MODE FUNCTIONAL
+set_global_assignment -name VECTOR_OUTPUT_FORMAT VWF
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST ON -section_id eda_simulation
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE "C:/Users/jhona/Documents/Documentos/CIRCUITOS_DIGITAIS-LABORATÓRIO/programmable-processor/ualWaveform.vwf"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top

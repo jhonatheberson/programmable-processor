@@ -75,6 +75,9 @@ begin
 		mux2: multiplexador port map(Y, "00000000" ,"00000000" ,"00000000" ,"00000000" ,setUAL, '1',S2);
 		som: somador_8bits port map(S1, S2,'0', resultadoSoma, coutSoma);
 		S <= resultadoSoma;
+		Z <= not(resultadoSoma(0)) and not(resultadoSoma(1)) and not(resultadoSoma(2)) and not(resultadoSoma(3)) and not(resultadoSoma(4)) and not(resultadoSoma(5)) and not(resultadoSoma(6)) and not(resultadoSoma(7));
+		
+		N <= '1' and (resultadoSoma(0));
 
 end archUAL;
 

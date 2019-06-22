@@ -5,6 +5,7 @@ entity celulamemoria is
 
 port(
         E  : in std_logic_vector(7 downto 0);
+		  reset : in std_logic;
         en   : in std_logic ;
         rw  : in std_logic;
         clk : in std_logic;
@@ -26,7 +27,7 @@ signal Saux : std_logic_vector(7 downto 0);
     
 begin
         FOR01 : for i in 0 to 7 generate
-             cont1 : FlipFlopJK port map( not(E(i))or not(en), E(i) or not(en), '1','1',clk,Saux(i));
+             cont1 : FlipFlopJK port map( not(E(i))or not(en), E(i) or not(en), not(reset),'1',clk,Saux(i));
              S(i)<= Saux(i) and not(rw);
              end generate;
 end archCelula;

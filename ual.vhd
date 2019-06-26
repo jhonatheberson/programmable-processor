@@ -77,7 +77,7 @@ begin
 		S <= resultadoSoma;
 		Z <= not(resultadoSoma(0)) and not(resultadoSoma(1)) and not(resultadoSoma(2)) and not(resultadoSoma(3)) and not(resultadoSoma(4)) and not(resultadoSoma(5)) and not(resultadoSoma(6)) and not(resultadoSoma(7));
 		
-		N <= '1' and (resultadoSoma(0));
+		N <= (resultadoSoma(7));
 
 end archUAL;
 

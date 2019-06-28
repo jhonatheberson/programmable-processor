@@ -1,15 +1,6 @@
 # Processador Neander
 
 Implementação do processador neander em vhdl.
-
-
-### Grupo
-
- - [Alessandro Cerioli](https://github.com/alecerioli)
- - [Felipe Lima](https://github.com/FelipeLM1)
- - [Jhonatan Heberson](https://github.com/jhonatheberson)
- - [Renato Lins]()
- - [Vinícios Menezes]()
  
  ## Requisitos
  
@@ -154,11 +145,6 @@ rw: 1 escreve 0 lê dados
 clk
 S: leitura dos dados
 
-
-
-
-
-
 ### Unidade de Controle
 
 You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
@@ -172,20 +158,8 @@ You can publish your file by opening the **Publish** sub-menu and by clicking **
 
 ## Getting Started
 
-
-
 open the project with extension example.qpf, then compile the prject and board the FPGA.
 
-### Prerequisites
-
-need to have installed the quartus II, to open the project and execute and board the Field Programmable Gate Array (FPGA).
-
-```
-Quartus II
-```
-```
-Cyclone II
-```
 ### Installing
 
 open Quartus II, then click on queue and "open project"
@@ -259,6 +233,15 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Jhonat Heberson** - *Initial work* - [PurpleBooth](https://github.com/jhonatheberson/)
+
+### Grupo
+
+ - [Alessandro Cerioli](https://github.com/alecerioli)
+ - [Felipe Lima](https://github.com/FelipeLM1)
+ - [Jhonatan Heberson](https://github.com/jhonatheberson)
+ - [Renato Lins]()
+ - [Vinícios Menezes]()
+
 
 See also the list of [contributors](https://github.com/jhonatheberson/programmable-processor/graphs/contributors) who participated in this project.
 

@@ -166,4 +166,105 @@ You can publish your file by opening the **Publish** sub-menu and by clicking **
 - Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
 - HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
 
+# programmable-processor
+
+ Proficient Programmable Programmer with Field Programmable Gate Array (FPGA).
+
+## Getting Started
+
+
+
+open the project with extension example.qpf, then compile the prject and board the FPGA.
+
+### Prerequisites
+
+need to have installed the quartus II, to open the project and execute and board the Field Programmable Gate Array (FPGA).
+
+```
+Quartus II
+```
+```
+Cyclone II
+```
+### Installing
+
+open Quartus II, then click on queue and "open project"
+
+after compile the project by doing the following instructions:
+
+`` `
+click on the "processing" tab
+`` `
+
+after this
+
+`` `
+Start compilation
+`` `
+
+when you finish compiling, click on the "Assignments" toolbar
+
+`` `
+Pin Planner
+`` `
+Make your pinning the way you want
+
+
+`` `
+repeat Start compilation
+`` `
+
+and ship the processor in the FPGA by performing the following steps:
+
+
+`` `
+tools
+`` `
+and
+
+`` `
+Programmer
+`` `
+After selecting the type of FPGA
+
+`` `
+Start
+`` `
+
+
+## Deployment
+
+to know how the processor and its features please read the following files in this repository:
+
+```
+00NEANDER.PNG
+```
+```
+01Operacoes.PNG
+```
+
+## Built With
+
+* [Quartus II](https://www.intel.com/content/www/us/en/programmable/downloads/software/quartus-ii-we/120.html) - development and deployment and debug
+
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://github.com/jhonatheberson/programmable-processor/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/jhonatheberson/programmable-processor/tree/master). 
+
+## Authors
+
+* **Jhonat Heberson** - *Initial work* - [PurpleBooth](https://github.com/jhonatheberson/)
+
+See also the list of [contributors](https://github.com/jhonatheberson/programmable-processor/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/jhonatheberson/LICENSE.md) file for details
+
+
 

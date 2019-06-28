@@ -24,7 +24,7 @@ Implementação do processador neander em vhdl.
 
 Os componentes do processador são:
 
--------------
+---
 
 ### UAL (Unidade Lógica e Aritmética)
 
@@ -46,7 +46,7 @@ Os resultados das operações são armazenados no AC que podem ser eventualmente
 
 [Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/ual.vhd#L7)
 
--------------
+---
 
 ### AC ( Acumulador)
 
@@ -62,7 +62,7 @@ Qs: Valor acumulado<br>
 
 [Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
 
--------------
+---
 
 ### Registrador NZ
 
@@ -78,7 +78,7 @@ Z (zero): indica resultado igual a zero<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/ual.vhd#L78)
 
--------------
+---
 
 ### PC 
 ![pc](https://i.ibb.co/bLkfHbj/PC.png)
@@ -100,40 +100,42 @@ ou load=0 e incrementar=0 nunca vão acontecer<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/pc.vhd#L4)
 
--------------
+---
 
 ### Mux
 
-Função: selecionar uma saída entre os endereços de memória RDM e PC e envia esse endereço para o REM.
+Funcionamento: é um multiplexador que seleciona uma saída entre os endereços de memória da saída do RDM ou da saída do PC e envia esse endereço para o REM.
 
--------------
+---
 
 ### Registrador REM
 
 ![reg8](https://i.ibb.co/Z6wGjXH/registrador8.png)
 
-Função: É o registrador de endereço de memória, ele recebe um endereço a partir do multiplexador e a saída é o endereço da célula de memória que deve ser ativada para leitura ou escrita. Utiliza o componente memoria8 que armazena os 8 bits necessários. Se o load estiver ativado, o registrador armazena a entrada paralela e quando o load estiver desativado o REM mantém o valor atual. A saída de 8 bits armazena o endereço de memória nos 4 bits menos significativo.<br>
+Funcionamento: 
+
+É o registrador de endereço de memória, ele recebe um endereço a partir do multiplexador e a saída é o endereço da célula de memória que deve ser ativada para leitura ou escrita. Utiliza o componente memoria8 que armazena os 8 bits necessários. Se o load estiver ativado, o registrador armazena a entrada paralela e quando o load estiver desativado o REM mantém o valor atual. A saída de 8 bits armazena o endereço de memória nos 4 bits menos significativo.<br>
 
 Variáveis:
 
 Ip: Endereço de entrada selecionado pelo multiplexador. <br>
 Qs: Endereço de saída que usa os 4 bits menos significativo. <br>
-Load: 
+Load: <br>
 0- Mantém o valor atual. <br>
 1- Ativa a entrada paralela. <br>
 
 [Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
 
--------------
+---
 
 ### Registrador RDM
 
 ![RDM](https://i.ibb.co/7WPWysM/RDM.png)
 
-Funcionamento :
+Funcionamento :<br>
 O registrador RDM é responsável por registrar os dados. As entradas de dados do RDM são da saída da memória e da saída do acumulador, que é um resultado de alguma operação da UAL. Foi implementado uma chave (selCP) para selecionar qual dado deve ser carregado. Quando o load estiver ativado e selCP=1 o dado carregado é da saída da memória(Imem) e quando o load=1 e selCP=1, então o registrador RDM carrega a saída do acumulador. Se o load estiver desativado (load=0), o RDM mantém o valor.<br>
 
-Variáveis:
+Variáveis:<br>
 Imem -  saída da memoria <br>
 Iac    - saída do acumulador<br>
 load - habilitador<br>
@@ -143,13 +145,13 @@ Qs - saida de 8 bits<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8RDM.vhd#L4)
 
--------------
+---
 
 ### Registrador INST(opcode)
 
 ![reg8](https://i.ibb.co/Z6wGjXH/registrador8.png)
 
-Funcionamento: Utiliza o código registrador8. Recebe a saída do RDM que são 8 bits onde os quatro bits mais significativos representa a operação a ser feita. O opcode recebe esses 8 bits e envia os quatro bits mais significativos para o decodificador.
+Funcionamento:<br> Utiliza o código registrador8. Recebe a saída do RDM que são 8 bits onde os quatro bits mais significativos representa a operação a ser feita. O opcode recebe esses 8 bits e envia os quatro bits mais significativos para o decodificador.
 
 Ip: Saída do RDM.<br>
 Qs: 4 bits mais significativos vão para o decodificador.<br>
@@ -159,24 +161,24 @@ Load: <br>
 
 [Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
 
--------------
+---
 
 ### Decodificador
 
-Funcionamento:
+Funcionamento:<br>
 
 Recebe um código de instrução de 4 bits, a partir do opcode, e transforma em uma código de instruções de 10 bits que é enviado para a unidade de controle.
 
 ![instru](https://i.ibb.co/nDG4gnh/01-Operacoes.png)
 
-Váriaveis:
+Váriaveis:<br>
 
 entrada_dec: Código da instrução.<br>
 saida_dec:  Código da instrução decodificado.<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/666bacf5a187198ca751a6d3de39412bbffc0716/Decodificador.vhd#L4)
 
--------------
+---
 
 ### Memória
 ![memoria](https://i.ibb.co/zfpLsZF/memoria.png)
@@ -184,7 +186,7 @@ saida_dec:  Código da instrução decodificado.<br>
 **Célula da memória:**
 
 ![celula](https://i.ibb.co/hymZzXL/celula.png)
-Funcionamento:
+Funcionamento:<br>
 
 A função da célula da memória é guardar um dado de 8 bits. Quando o enable estiver ativo e rw(read, write) =1 escreve um valor na célula (obs: enquanto estiver escrevendo a saída é 0). Se o enable estiver ativo e rw=0, a saída será a leitura dos dados da célula. E se o enable estiver desativado, mantém o valor. <br>
 Para uma célula ser habilitada o enable dela deve estar ativada e rw=1<br>
@@ -199,12 +201,12 @@ S: saída<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/666bacf5a187198ca751a6d3de39412bbffc0716/celulamemoria.vhd#L1)
 
--------------
+---
 
 **Memória completa:** 
 
 ![memcompleta](https://i.ibb.co/f9vSfSn/memoria.png)
-Funcionamento :
+Funcionamento :<br>
 
 Tem como entradas um dado e um endereço. Para encontrar a célula o endereço passa por um varias portas and que testa as possibilidades de 0 á 15 até encontrar algum endereço a ser ativado.  <br>
 
@@ -221,6 +223,8 @@ clk<br>
 S: leitura dos dados<br>
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/b9a7ac0f7c587db3563ee6d05f8bfdff4956c5fc/memoriacompleta.vhd#L4)
+
+---
 
 ### Colaboradores
 <table>

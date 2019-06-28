@@ -166,26 +166,11 @@ You can publish your file by opening the **Publish** sub-menu and by clicking **
 - Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
 - HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
 
-# programmable-processor
-
- Proficient Programmable Programmer with Field Programmable Gate Array (FPGA).
 
 ## Getting Started
 
-
-
 open the project with extension example.qpf, then compile the prject and board the FPGA.
 
-### Prerequisites
-
-need to have installed the quartus II, to open the project and execute and board the Field Programmable Gate Array (FPGA).
-
-```
-Quartus II
-```
-```
-Cyclone II
-```
 ### Installing
 
 open Quartus II, then click on queue and "open project"

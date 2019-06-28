@@ -11,16 +11,16 @@ architecture archDec of decodificador is
 begin
   WITH entrada_dec SELECT
   
-    saida_dec <= "0000000000" WHEN "0000",
-                 "0000000001" WHEN "0001",
-                 "0000000010" WHEN "0010",
-                 "0000000100" WHEN "0011",
-                 "0000001000" WHEN "0100",
-                 "0000010000" WHEN "0101",
-                 "0000100000" WHEN "0110",
-                 "0001000000" WHEN "0111",
-                 "0010000000" WHEN "1000",
-                 "0100000000" WHEN "1001",
-                 "1000000000" WHEN "1011",
+    saida_dec <= "0000000000" WHEN "0000", -- NOP     - nenhuma operacao
+                 "0000000001" WHEN "0001", -- STA end - armazena acumulador(store)
+                 "0000000010" WHEN "0010", -- LDA end - carrega acumulador (load) 
+                 "0000000100" WHEN "0011", -- ADD end - Soma
+                 "0000001000" WHEN "0100", -- OR end  - ou logico
+                 "0000010000" WHEN "0101", -- AND end - e logico
+                 "0000100000" WHEN "0110", -- NOT     - inverte(complementa) acumulador
+                 "0001000000" WHEN "1000", -- JMP end - desvio incodicional - (jump)
+                 "0010000000" WHEN "1001", -- JN end  - desvio condicional  - (jump on negative)
+                 "0100000000" WHEN "1010", -- JZ end  - desvio condicional  - (jump on zero)
+                 "1000000000" WHEN "1111", -- HLT     - termino de execucao - (halt)
 		 "1111111111" WHEN OTHERS;
 end archDec;

@@ -1,237 +1,7 @@
+# Processador Neander
 
-# Neander Processor
+Implementação do processador neander em vhdl.
 
-Implementation of neander processor in vhdl.
- 
- ## Requirements
- 
- - Quartus II
- - Altera Cyclone II
-
-## Neander Architecture
-
-! [neander] (https://i.ibb.co/S5T92nv/neander.png)
-
-## Components
-
-The processor components are:
-
-### UAL (Logical and Arithmetic Unit)
-
-You can rename the current file by clicking the file name in the navigation bar or by clicking the "Rename" button in the file explorer.
-
-### AC (Accumulator)
-
-Operation: Accumulates the results of the operations performed in the UAL and sends the accumulated results to the RDM and the "x" of the UAL.
-
-Variables:
-
-Ip: Data obtained from the exit of the UAL.
-Load: If enabled, enables parallel input. If it is disabled, it maintains the current value.
-Qs: Accumulated amount <br>
-
-
-### NZ Recorder
-
-N (negative): sign of the result of an operation in the ALU
-• if the result of the ALU is negative, N = 1
-• Otherwise, N = 0
-
-Z (zero): indicates result equal to zero
-• If the result of the ALU is zero, Z = 1
-• Otherwise, Z = 0
-
-### PRAÇA **
-
-Function:
-Point to the memory location where the program is running or where the program will run.
-
-LOAD = 1: loads parallel input
-Increment = 1: sum 1
-
-Note:
-load = 1 and increment = 1
-or load = 0 and increment = 0 will never happen
-
-Variables:
-jumpto: RDM parallel input
-load: If activated, load jumpto.
-increase: add 1
-clk: clock
-QS: output
-
-
-### Mux
-
-Function: Select an output between the RDM and PC memory addresses and send that address to the REM.
-
-### REM Recorder
-
-Function: It is the memory address register, it receives an address from the multiplexer and the output is the address of the memory cell that must be activated for reading or writing. Uses the component memory8 that stores the 8 bits required. If the load is enabled, the register stores the parallel input and when the load is deactivated REM retains the current value. The 8-bit output stores the memory address in the 4 least significant bits.
-
-Variables:
-
-Ip: Input address selected by the multiplexer. Home
-Qs: Output address that uses the 4 least significant bits. Home
-Load:
-0- Maintains the current value. Home
-1- Activates the parallel input. Home
-
-### RDM Recorder
-
-Operation :
-The RDM recorder is responsible for recording the data. The RDM data inputs are from the memory output and from the accumulator output, which is a result of some UAL operation. A key (selCP) has been implemented to select which data to load. When the load is activated and selCP = 1 the data loaded is from the memory output (Imem) and when load = 1 and selCP = 1, then the RDM register loads the accumulator output. If the load is disabled (load = 0), RDM retains the value.
-
-Variables:
-Imem - out of memory <br>
-Iac - accumulator output <br>
-load - enabler <br>
-selCP - select between Imem and Iac <br>
-clk - clock <br>
-Qs - output of 8 bits <br>
-
-### INST (opcode) Recorder
-
-Operation: Use the register code8. It receives the output of the RDM which are 8 bits where the four most significant bits represent the operation to be done. The opcode receives these 8 bits and sends the four most significant bits to the decoder.
-
-Ip: Output from RDM. <br>
-Qs: 4 most significant bits go to the decoder. <br>
-Load: <br>
-0 - Maintains the current value. Home
-1- Activates the parallel input. Home
-
-
-
-### Decoder
-
-Operation:
-
-It receives a 4-bit instruction code, from the opcode, and transforms into a 10-bit instruction code that is sent to the control unit.
-
-Variables:
-
-input_dec: Code of the instruction.
- saida_dec: Code of the decoded instruction. <br>
-
-
-### Memory
-
-** Memory cell: **
-
-Operation:
-
-The function of the memory cell is to store an 8-bit data. When enable is active and rw (read, write) = 1 writes a value in the cell (obs: while writing the output is 0). If the enable is active and rw = 0, the output will read the cell data. And if the enable is disabled, it maintains the value.
-
-Variables:
-
-E: value that will write <br>
-in: Enable cell <br>
-rw: 1 writes 0 reads data <br>
-clk: clock <br>
-S: output <br>
-
-** Full memory: **
-
-Operation :
-
-It has as inputs a data and an address, if rw = 1 the input data will be written in the cell of the input address and if rw = 0 it reads the data in the same address.
-
-obs:
-for a cell to be enabled its enable must be enabled and rw = 1
-
-Variables:
-
-E: Given to be written.
-reset
-Ad: 4 bits address - REM output - cell address to be enabled
-rw: 1 writes 0 reads data
-clk
-S: reading the data
-
-### Control Unit
-
-You can publish your file by opening the ** Publish ** sub-menu and by clicking ** Publish to **. For some locations, you can choose between the following formats:
-
-- Markdown: publish the Markdown text on a website that can interpret it (** GitHub ** for instance),
-- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
-
-## Getting Started
-
-open the project with extension example.qpf, then compile the prject and board the FPGA.
-
-### Installing
-
-open Quartus II, then click on queue and "open project"
-
-after compile the project by doing the following instructions:
-
-`` `
-click on the "processing" tab
-`` `
-
-after this
-
-`` `
-Start compilation
-`` `
-
-when you finish compiling, click on the "Assignments" toolbar
-
-`` `
-Pin Planner
-`` `
-
-Make your pinning the way you want
-
-`` `
-repeat Start compilation
-`` `
-
-and ship the processor in the FPGA by performing the following steps:
-
-`` `
-tools
-`` `
-
-and
-
-`` `
-Programmer
-`` `
-
-After selecting the type of FPGA
-
-`` `
-Start
-`` `
-
-## Deployment
-
-to know how the processor and its features please read the following files in this repository:
-
-```
-00NEANDER.PNG
-```
-```
-01Operacoes.PNG
-```
-
-## Built With
-
-* [Quartus II](https://www.intel.com/content/www/us/en/programmable/downloads/software/quartus-ii-we/120.html) - development and deployment and debug
-
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/jhonatheberson/programmable-processor/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/jhonatheberson/programmable-processor/tree/master). 
-
-## Authors
-
-* **Jhonat Heberson** - *Initial work* - [PurpleBooth](https://github.com/jhonatheberson/)
 
 ### Grupo
 
@@ -240,13 +10,249 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
  - [Jhonatan Heberson](https://github.com/jhonatheberson)
  - [Renato Lins]()
  - [Vinícios Menezes]()
+ 
+ ## Requisitos
+ 
+ - Quartus II
+ - Altera Cyclone II 
+
+## Arquitetura do Neander
+
+![neander](https://i.ibb.co/S5T92nv/neander.png)
+
+## Componentes
+
+Os componentes do processador são:
+
+-------------
+
+### UAL (Unidade Lógica e Aritmética)
+
+Unidade Aritmética e Lógica (UAL): conforme a seleção da UAL (selUAL), 5 operações diferentes podem ocorrer. A largura dos dados é de 8 bits. A UAL é capaz de identificar quando o resultado é ZERO (Z) ou NEGATIVO (N).<br>
+
+As operações da UAL são: <br>
+
+ - X+Y , quando selUAL = 000
+ - X and Y , quando selUAL = 001
+ - X or Y   , quando selUAL = 010
+ - not X  , quando selUAL = 011
+ - Y , quando selUAL = 100
+
+As entradas da UAL são o X, que é um dado recebido do componente acumulador, Y que é a saída do registrador de dados da memória e o selUAL que seleciona qual operação deve ser feita.<br>
+Os resultados das operações são armazenados no AC que podem ser eventualmente enviadas para a memória, ou tambem podem fazer novas operações, ja que o AC é a entrada X do UAL.
+ 
+	
 
 
-See also the list of [contributors](https://github.com/jhonatheberson/programmable-processor/graphs/contributors) who participated in this project.
+[Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/ual.vhd#L7)
 
-## License
+-------------
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/jhonatheberson/programmable-processor/blob/master/LICENSE) file for details
+### AC ( Acumulador)
 
+![reg8](https://i.ibb.co/Z6wGjXH/registrador8.png)
+
+Funcionamento : Acumula os resultados das operações feitas na UAL e envia os resultados acumulados para o RDM e o "x" da UAL.
+
+Variáveis:
+
+Ip: Dados obtidos  a partir da saída da UAL.<br>
+Load: Se estiver ativado ,  habilita a entrada paralela. Se estiver desativado, mantém o valor atual.<br>
+Qs: Valor acumulado<br>
+
+[Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
+
+-------------
+
+### Registrador NZ
+
+N (negativo): sinal do resultado de uma operação na ULA<br>
+
+ - Se o resultado da ULA for negativo, N=1
+ - Caso contrário, N=0
+
+Z (zero): indica resultado igual a zero<br>
+
+ - Se o resultado da ULA for zero, Z =1
+ - Caso contrário, Z=0
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/ual.vhd#L78)
+
+-------------
+
+### PC 
+![pc](https://i.ibb.co/bLkfHbj/PC.png)
+
+Funcionamento:
+Apontar para posição de memória onde está sendo executado ou onde será executado o programa.
+
+LOAD=1 :carrega entrada paralela
+Incrementar=1 :soma 1
+
+Obs:
+load=1 e incrementar=1
+ou load=0 e incrementar=0 nunca vão acontecer 
+
+Variáveis:
+jumpto: entrada paralela do RDM
+load: Se estiver ativado carrega o jumpto.
+incrementar : somar 1
+clk: clock
+QS: saída
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/pc.vhd#L4)
+
+-------------
+
+### Mux
+
+Função: selecionar uma saída entre os endereços de memória RDM e PC e envia esse endereço para o REM.
+
+-------------
+
+### Registrador REM
+
+![reg8](https://i.ibb.co/Z6wGjXH/registrador8.png)
+
+Função: É o registrador de endereço de memória, ele recebe um endereço a partir do multiplexador e a saída é o endereço da célula de memória que deve ser ativada para leitura ou escrita. Utiliza o componente memoria8 que armazena os 8 bits necessários. Se o load estiver ativado, o registrador armazena a entrada paralela e quando o load estiver desativado o REM mantém o valor atual. A saída de 8 bits armazena o endereço de memória nos 4 bits menos significativo.<br>
+
+Variáveis:
+
+Ip: Endereço de entrada selecionado pelo multiplexador. <br>
+Qs: Endereço de saída que usa os 4 bits menos significativo. <br>
+Load: 
+0- Mantém o valor atual. <br>
+1- Ativa a entrada paralela. <br>
+
+[Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
+
+-------------
+
+### Registrador RDM
+
+![RDM](https://i.ibb.co/7WPWysM/RDM.png)
+
+Funcionamento :
+O registrador RDM é responsável por registrar os dados. As entradas de dados do RDM são da saída da memória e da saída do acumulador, que é um resultado de alguma operação da UAL. Foi implementado uma chave (selCP) para selecionar qual dado deve ser carregado. Quando o load estiver ativado e selCP=1 o dado carregado é da saída da memória(Imem) e quando o load=1 e selCP=1, então o registrador RDM carrega a saída do acumulador. Se o load estiver desativado (load=0), o RDM mantém o valor.<br>
+
+Variáveis:
+Imem -  saída da memoria <br>
+Iac    - saída do acumulador<br>
+load - habilitador<br>
+selCP - selecionar entre Imem e Iac<br>
+clk - clock<br>
+Qs - saida de 8 bits<br>
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8RDM.vhd#L4)
+
+-------------
+
+### Registrador INST(opcode)
+
+![reg8](https://i.ibb.co/Z6wGjXH/registrador8.png)
+
+Funcionamento: Utiliza o código registrador8. Recebe a saída do RDM que são 8 bits onde os quatro bits mais significativos representa a operação a ser feita. O opcode recebe esses 8 bits e envia os quatro bits mais significativos para o decodificador.
+
+Ip: Saída do RDM.<br>
+Qs: 4 bits mais significativos vão para o decodificador.<br>
+Load: <br>
+0 - Mantém o valor atual. <br>
+1- Ativa a entrada paralela. <br>
+
+[Ver Código ](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/registrador8.vhd#L4)
+
+-------------
+
+### Decodificador
+
+Funcionamento:
+
+Recebe um código de instrução de 4 bits, a partir do opcode, e transforma em uma código de instruções de 10 bits que é enviado para a unidade de controle.
+
+![instru](https://i.ibb.co/nDG4gnh/01-Operacoes.png)
+
+Váriaveis:
+
+entrada_dec: Código da instrução.<br>
+saida_dec:  Código da instrução decodificado.<br>
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/666bacf5a187198ca751a6d3de39412bbffc0716/Decodificador.vhd#L4)
+
+-------------
+
+### Memória
+![memoria](https://i.ibb.co/zfpLsZF/memoria.png)
+
+**Célula da memória:**
+
+![celula](https://i.ibb.co/hymZzXL/celula.png)
+Funcionamento:
+
+A função da célula da memória é guardar um dado de 8 bits. Quando o enable estiver ativo e rw(read, write) =1 escreve um valor na célula (obs: enquanto estiver escrevendo a saída é 0). Se o enable estiver ativo e rw=0, a saída será a leitura dos dados da célula. E se o enable estiver desativado, mantém o valor. <br>
+Para uma célula ser habilitada o enable dela deve estar ativada e rw=1<br>
+
+Variáveis:
+
+E: valor que vai escrever<br>
+en: Habilitar célula<br>
+rw: 1 escreve - 0 lê dados<br>
+clk: clock<br>
+S: saída<br>
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/666bacf5a187198ca751a6d3de39412bbffc0716/celulamemoria.vhd#L1)
+
+-------------
+
+**Memória completa:** 
+
+![memcompleta](https://i.ibb.co/f9vSfSn/memoria.png)
+Funcionamento :
+
+Tem como entradas um dado e um endereço. Para encontrar a célula o endereço passa por um varias portas and que testa as possibilidades de 0 á 15 até encontrar algum endereço a ser ativado.  <br>
+
+Após encontrar alguma célula habilitada o dado de entrada será escrito na célula.<br>
+ Se rw=0, faz a leitura dos dados.<br>
+
+Variáveis:
+
+E: Dado para ser escrito.<br>
+reset<br>
+Ad: endereço de 4 bits - saída do REM - endereço da célula que deve ser habilitada<br>
+rw: 1 escreve 0 lê dados<br>
+clk<br>
+S: leitura dos dados<br>
+
+[Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/b9a7ac0f7c587db3563ee6d05f8bfdff4956c5fc/memoriacompleta.vhd#L4)
+
+### Colaboradores
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/alecerioli">
+        <img src="https://i.ibb.co/sb97swP/me.png" width="100px;" alt="Aryclenio Xavier"/>
+        <br />
+        <sub><b>Alessandro Cerioli</b></sub>
+      </a><br />
+      <a href="https://github.com/jhonatheberson/programmable-processor/commits?author=alecerioli" title="Code">💻</a>
+	  </td>	  
+    <td align="center">
+      <a href="https://github.com/FelipeLM1">
+        <img src="https://avatars2.githubusercontent.com/u/48065743?s=460&v=4" width="100px;" alt="Iago Cassel"/>
+        <br/>
+        <sub><b>Felipe Lima</b></sub>
+      </a><br />
+      <a href="https://github.com/jhonatheberson/programmable-processor/commits?author=FelipeLM1" title="Code">💻</a>
+    </td>
+	
+<td align="center">
+      <a href="https://github.com/jhonatheberson">
+        <img src="https://avatars1.githubusercontent.com/u/42505240?s=460&v=4" width="100px;" alt="Aryclenio Xavier"/>
+        <br />
+        <sub><b>Jhonat Heberson</b></sub>
+      </a><br />
+      <a href="https://github.com/jhonatheberson/programmable-processor/commits?author=jhonatheberson" title="Code">💻</a>
+    </td>    
+  </tr>
+</table>
 
 

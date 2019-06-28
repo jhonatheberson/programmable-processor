@@ -84,21 +84,19 @@ Z (zero): indica resultado igual a zero<br>
 ![pc](https://i.ibb.co/bLkfHbj/PC.png)
 
 Funcionamento:
-Apontar para posição de memória onde está sendo executado ou onde será executado o programa.
 
-LOAD=1 :carrega entrada paralela
-Incrementar=1 :soma 1
-
-Obs:
-load=1 e incrementar=1
-ou load=0 e incrementar=0 nunca vão acontecer 
+Contador de programa é o registrador que indica qual é a posição atual na sequência de execução de um processo. Ele armazena o endereço da instrução sendo executada ou o endereço da próxima instrução. O contador de programa é automaticamente incrementado para cada ciclo de instrução de forma que as instruções são executadas sequencialmente a partir da memória. O PC deve é zerado no inicio da execução.<br>
 
 Variáveis:
-jumpto: entrada paralela do RDM
-load: Se estiver ativado carrega o jumpto.
-incrementar : somar 1
-clk: clock
-QS: saída
+jumpto: entrada paralela do RDM<br>
+load: Se estiver ativado carrega o jumpto.<br>
+incrementar : somar 1<br>
+clk: clock<br>
+QS: saída<br>
+
+Obs:
+load=1 e incrementar=1<br>
+ou load=0 e incrementar=0 nunca vão acontecer<br> 
 
 [Ver Código](https://github.com/jhonatheberson/programmable-processor/blob/28c792cf8e0bd7a8056d5ee62f80bdb4209a7b9c/pc.vhd#L4)
 

@@ -1,87 +1,169 @@
-# programmable-processor
+# Processador Neander
 
- Proficient Programmable Programmer with Field Programmable Gate Array (FPGA).
+Implementação do processador neander em vhdl.
 
-## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Grupo
 
-### Prerequisites
+ - [Alessandro Cerioli](https://github.com/alecerioli)
+ - [Felipe Lima](https://github.com/FelipeLM1)
+ - [Jhonatan Heberson](https://github.com/jhonatheberson)
+ - [Renato Lins]()
+ - [Vinícios Menezes]()
+ 
+ ## Requisitos
+ 
+ - Quartus II
+ - Altera Cyclone II 
 
-What things you need to install the software and how to install them
+## Arquitetura do Neander
 
-```
-Give examples
-```
+![neander](https://i.ibb.co/S5T92nv/neander.png)
 
-### Installing
+## Componentes
 
-A step by step series of examples that tell you how to get a development env running
+Os componentes do processador são:
 
-Say what the step will be
+### UAL (Unidade Lógica e Aritmética)
 
-```
-Give the example
-```
+You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
 
-And repeat
+### AC ( Acumulador)
 
-```
-until finished
-```
+Funcionamento : Acumula os resultados das operações feitas na UAL e envia os resultados acumulados para o RDM e o "x" da UAL.
 
-End with an example of getting some data out of the system or using it for a little demo
+Variáveis:
 
-## Running the tests
+Ip: Dados obtidos  a partir da saída da UAL.<br>
+Load: Se estiver ativado ,  habilita a entrada paralela. Se estiver desativado, mantém o valor atual.<br>
+Qs: Valor acumulado<br>
 
-Explain how to run the automated tests for this system
+### Registrador NZ
 
-### Break down into end to end tests
+N (negativo): sinal do resultado de uma operação na ULA
+• se o resultado da ULA for negativo, N=1
+• Caso contrário, N=0
 
-Explain what these tests test and why
+Z (zero): indica resultado igual a zero
+• Se o resultado da ULA for zero, Z =1
+• Caso contrário, Z=0
 
-```
-Give an example
-```
+### PC **
 
-### And coding style tests
+Função:
+Apontar para posição de memória onde está sendo executado ou onde será executado o programa.
 
-Explain what these tests test and why
+LOAD=1 :carrega entrada paralela
+Incrementar=1 :soma 1
 
-```
-Give an example
-```
+Obs:
+load=1 e incrementar=1
+ou load=0 e incrementar=0 nunca vão acontecer 
 
-## Deployment
+Variáveis:
+jumpto: entrada paralela do RDM
+load: Se estiver ativado carrega o jumpto.
+incrementar : somar 1
+clk: clock
+QS: saida
 
-Add additional notes about how to deploy this on a live system
+### Mux
 
-## Built With
+Função: selecionar uma saída entre os endereços de memória RDM e PC e envia esse endereço para o REM.
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+### Registrador REM
 
-## Contributing
+Função: É o registrador de endereço de memória, ele recebe um endereço a partir do multiplexador e a saída é o endereço da célula de memória que deve ser ativada para leitura ou escrita. Utiliza o componente memoria8 que armazena os 8 bits necessários. Se o load estiver ativado, o registrador armazena a entrada paralela e quando o load estiver desativado o REM mantém o valor atual. A saída de 8 bits armazena o endereço de memória nos 4 bits menos significativo.<br>
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Variáveis:
 
-## Versioning
+Ip: Endereço de entrada selecionado pelo multiplexador. <br>
+Qs: Endereço de saída que usa os 4 bits menos significativo. <br>
+Load: 
+0- Mantém o valor atual. <br>
+1- Ativa a entrada paralela. <br>
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+### Registrador RDM
 
-## Authors
+Funcionamento :
+O registrador RDM é responsável por registrar os dados. As entradas de dados do RDM são da saída da memória e da saída do acumulador, que é um resultado de alguma operação da UAL. Foi implementado uma chave (selCP) para selecionar qual dado deve ser carregado. Quando o load estiver ativado e selCP=1 o dado carregado é da saída da memória(Imem) e quando o load=1 e selCP=1, então o registrador RDM carrega a saída do acumulador. Se o load estiver desativado (load=0), o RDM mantém o valor.<br>
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+Variáveis:
+Imem -  saída da memoria <br>
+Iac    - saída do acumulador<br>
+load - habilitador<br>
+selCP - selecionar entre Imem e Iac<br>
+clk - clock<br>
+Qs - saida de 8 bits<br>
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+### Registrador INST(opcode)
 
-## License
+Funcionamento: Utiliza o código registrador8. Recebe a saída do RDM que são 8 bits onde os quatro bits mais significativos representa a operação a ser feita. O opcode recebe esses 8 bits e envia os quatro bits mais significativos para o decodificador.
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Ip: Saída do RDM.<br>
+Qs: 4 bits mais significativos vão para o decodificador.<br>
+Load: <br>
+0 - Mantém o valor atual. <br>
+1- Ativa a entrada paralela. <br>
 
-## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+
+### Decodificador
+
+Funcionamento:
+
+Recebe um código de instrução de 4 bits, a partir do opcode, e transforma em uma código de instruções de 10 bits que é enviado para a unidade de controle.
+
+Váriaveis:
+
+entrada_dec: Código da instrução.<br>
+ saida_dec:  Código da instrução decodificado.<br>
+
+
+### Memória
+
+**Célula da memória:**
+
+Funcionamento:
+
+A função da célula da memória é guardar um dado de 8 bits. Quando o enable estiver ativo e rw(read, write) =1 escreve um valor na célula (obs: enquanto estiver escrevendo a saída é 0). Se o enable estiver ativo e rw=0, a saída será a leitura dos dados da célula. E se o enable estiver desativado, mantém o valor.<br>
+
+Variáveis:
+
+E: valor que vai escrever<br>
+en: Habilitar célula<br>
+rw: 1 escreve 0 lê dados<br>
+clk: clock<br>
+S: saída<br>
+
+**Memória completa:**
+
+Funcionamento :
+
+Tem como entradas um dado e um endereço, se rw=1 o dado de entrada será escrito na célula do endereço de entrada e se rw=0 faz a leitura dos dados no mesmo endereço.
+
+obs:
+para uma célula ser habilitada o enable dela deve estar ativada e rw=1
+
+Variáveis:
+
+E: Dado para ser escrito.
+reset
+Ad: endereço de 4 bits - saída do REM - endereço da célula que deve ser habilitada
+rw: 1 escreve 0 lê dados
+clk
+S: leitura dos dados
+
+
+
+
+
+
+### Unidade de Controle
+
+You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
+
+- Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
+- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
+
+

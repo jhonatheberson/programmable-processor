@@ -224,7 +224,7 @@ to know how the processor and its features please read the following files in th
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/jhonatheberson/programmable-processor/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/jhonatheberson/programmable-processor/blob/dev/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 

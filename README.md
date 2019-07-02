@@ -8,8 +8,8 @@ Implementação do processador neander em vhdl.
  - [Alessandro Cerioli](https://github.com/alecerioli)
  - [Felipe Lima](https://github.com/FelipeLM1)
  - [Jhonatan Heberson](https://github.com/jhonatheberson)
- - [Renato Lins]()
- - [Vinícios Menezes]()
+ - [Renato Lins](https://github.com/renatolafarias)
+
  
  ## Requisitos
  
@@ -226,6 +226,64 @@ S: leitura dos dados<br>
 
 ---
 
+### Unidade de Controle
+![UnidadeControle](https://user-images.githubusercontent.com/38267356/60526476-cbe8cc80-9cc6-11e9-8cd8-7716bd4595c8.png)
+
+Funcionamento: A Unidade de Controle do Processador NEANDER tem a função de gerenciar o armazenamento das instruções e dados na mamória do processador, e também gerenciaciar o processador para que as instruções aritiméticas sejam realizadas.
+
+A unidade de controle recebe uma instrução a ser realiazada, e gerencia todos os componentes do processador para que aquela instrução seja afetuada. Esse gerenciamento é feito através das saídas do processador, que é ligada a todos os componentes do processador, podendo assim mandar sinais de controle para todos eles.
+
+Um registrador demora pelo menos um ciclo de clock para armazenar o valor e começar a emitilo, por isso, a unidade de controle deve respeitar o tempo de cada registrador para não trabalhar com valores errados. 
+
+**Instruções:**
+
+Para o nosso processador NEANDER, o unidade de controle pode ler e executar 11 instruções, sendo o funcionamento delas descritas abaixo:
+
+**1. NOP**
+
+Ao ler a instrução NOP, a Unidade de Controle apenas volta para o Ciclo de busca.
+
+**2. STA**
+
+Ao ler a instrução STA, a unidade de controle deve pegar o prómixo dado da memória e armazenar no acumulador, e posteriormente sobrescrever esse mesmo dado no endereço dado pela próxima posição da memória.
+
+**3. LDA**
+
+Ao ler a instrução LDA, a unidade de controle deve armazenar o dado que está no próximo endereço da memória no acumulador.
+
+**4. ADD**
+
+Ao ler a instrução ADD, a unidade de controle deve armazenar o dado que está no próximo endereço da memória no acumulador, e posteriormente deve ler o próximo dado da mémoria e somar com o dado anterior, enviando o sinal de controle de soma para UAL, armazenando o resultando no acumulador.
+
+**5. OR**
+
+Ao ler a instrução OR, a unidade de controle deve armazenar o dado que está no próximo endereço da memória no acumulador, e posteriormente deve ler o próximo dado da mémoria e realizar um OR LÓGICO com o dado anterior, enviando o sinal de controle OR para a UAL, armazenando o resultando no acumulador.
+
+**6. AND** 
+
+Ao ler a instrução AND, a unidade de controle deve armazenar o dado que está no próximo endereço da memória no acumulador, e posteriormente deve ler o próximo dado da mémoria e realizar um AND LÓGICO com o dado anterior, enviando o sinal de controle AND para a UAL, armazenando o resultando no acumulador.
+
+**7. NOT**
+
+Ao ler a instrução NOT, a unidade de controle deve ler o dado que está na próximo endereço da memória e enviar para UAL, enviando o sinal de controle NOT para UAL, e posteriormente armazenar o resultado no acumulador.
+
+**8. JMP**
+
+Ao ler a instrução JMP, a unidade de controle deve executar a instrução que está no endereço indicado no próximo endereço da memória.
+
+**9. JN**
+
+Ao ler a instrução JN, a unidade de controle deve executar a instrução que está no endereço indicado no próximo endereço da memória, apenas se a última operação realizada produziu um valor com o bit 7 ligado.
+
+**10. JZ**
+
+Ao ler a instrução JZ, a unidade de controle deve executar a instrução que está no endereço indicado no próximo endereço da memória, apenas se a última operação realizada produziu um valor zero.
+
+**11. HLT**
+
+Ao ler a instrução HLT, a unidade de controle deve parar o processador.
+
+---
 ### Colaboradores
 <table>
   <tr>
@@ -245,6 +303,15 @@ S: leitura dos dados<br>
       </a><br />
       <a href="https://github.com/jhonatheberson/programmable-processor/commits?author=FelipeLM1" title="Code">💻</a>
     </td>
+	  
+<td align="center">
+      <a href="https://github.com/renatolafarias">
+        <img src="https://avatars1.githubusercontent.com/u/38267356?s=400&u=401b90d618e6d4afb35f51921aaef55154514097&v=4" width="100px;" alt="Iago Cassel"/>
+        <br/>
+        <sub><b>Renato Lins</b></sub>
+      </a><br />
+      <a href="https://github.com/jhonatheberson/programmable-processor/commits?author=renatolafarias" title="Code">💻</a>
+    </td>  
 	
 <td align="center">
       <a href="https://github.com/jhonatheberson">
